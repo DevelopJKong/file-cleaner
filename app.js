@@ -34,9 +34,9 @@ const onMkdirHandler = (path) => {
 };
 
 const onFileCleaner = (path) => {
-  const imagePath = path + "/day_images";
-  const videoPath = path + "/day_videos";
-  const filePath = path + "/day_files";
+  const imagePath = path + "/_day_images";
+  const videoPath = path + "/_day_videos";
+  const filePath = path + "/_day_files";
   const date = moment().format("YYYY-MM-DD");
   const imageDateFolder = `${imagePath}/${date}`;
   const videoDateFolder = `${videoPath}/${date}`;
