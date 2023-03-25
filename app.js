@@ -13,6 +13,14 @@ const REGEX = Object.freeze({
   HWP_REGEX: /\.hwp$/i,
 });
 
+/**
+ * @title 파일 복사
+ * @description 파일 복사 후 기존 파일 삭제
+ * @param {string} path - 파일이 있는 경로
+ * @param {string} datePath - 날짜별 폴더 경로
+ * @param {string} item - 파일 이름
+ * @returns {void}
+ */
 const onCopyFileHandler = (path, datePath, item) => {
   fs.copyFile(`${path}/${item}`, `${datePath}/${item}`, (err) => {
     if (err) throw err;
@@ -27,12 +35,43 @@ const onCopyFileHandler = (path, datePath, item) => {
   });
 };
 
+/**
+ * @title 폴더 생성
+ * @description 폴더가 없을 경우 폴더 생성
+ * @param {string} path - 폴더 경로
+ * @returns {void}
+ */
 const onMkdirHandler = (path) => {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path);
   }
 };
+const shellClassInfo = `
+[.ShellClassInfo]
+IconResource=C:\\WINDOWS\\System32\\SHELL32.dll,43
+[ViewState]
+Mode=
+Vid=
+FolderType=Generic
+`;
 
+const onWriteFileHandler = (path) => {
+  if (!fs.existsSync(`${path}/desktop.ini`)) {
+    fs.writeFileSync(`${path}/desktop.ini`, shellClassInfo.trim());
+  }
+  fs.readdirSync(path).forEach((file) => {
+    if (file.toLowerCase() === "desktop.ini") {
+      fs.renameSync(`${path}/${file}`, `${path}/desktop.ini`);
+      fs.chmodSync(`${path}/desktop.ini`, "0444");
+    }
+  });
+};
+
+/**
+ * @title 파일 정리
+ * @description 파일 정리을 정리해주는 main 함수입니다.
+ * @param {string} path
+ */
 const onFileCleaner = (path) => {
   const imagePath = path + "/_day_images";
   const videoPath = path + "/_day_videos";
@@ -67,14 +106,17 @@ const onFileCleaner = (path) => {
       files.map((item) => {
         if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
           if (IMAGE_REGEX.test(item)) {
+            onWriteFileHandler(imageDateFolder);
             onCopyFileHandler(path, imageDateFolder, item);
           }
 
           if (VIDEO_REGEX.test(item)) {
+            onWriteFileHandler(imageDateFolder);
             onCopyFileHandler(path, videoDateFolder, item);
           }
 
           if (FILE_REGEX.test(item)) {
+            onWriteFileHandler(imageDateFolder);
             if (PDF_REGEX.test(item)) onCopyFileHandler(path, fileDatePdf, item);
             if (XLS_REGEX.test(item)) onCopyFileHandler(path, fileDateXls, item);
             if (ZIP_REGEX.test(item)) onCopyFileHandler(path, fileDateZip, item);
