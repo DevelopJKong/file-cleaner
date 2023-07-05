@@ -1,12 +1,13 @@
 import fs from "fs";
 import moment from "moment";
 
-const mainPath = "C:/Users/tbara/OneDrive/기본폴더/바탕 화면";
+const mainPath = "/Users/jeongbin/Downloads";
 
 const REGEX = Object.freeze({
-  IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif)$/i,
+  IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif|\.svg)$/i,
   VIDEO_REGEX: /\.mp4$|\.avi$|\.mov$|\.wmv$|\.flv$/i,
-  FILE_REGEX: /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
+  FILE_REGEX:
+    /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso$/i,
   PDF_REGEX: /\.pdf$/i,
   XLS_REGEX: /\.xls$|\.xlsx$/i,
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
@@ -46,26 +47,6 @@ const onMkdirHandler = (path) => {
     fs.mkdirSync(path);
   }
 };
-const shellClassInfo = `
-[.ShellClassInfo]
-IconResource=C:\\WINDOWS\\System32\\SHELL32.dll,43
-[ViewState]
-Mode=
-Vid=
-FolderType=Generic
-`;
-
-const onWriteFileHandler = (path) => {
-  if (!fs.existsSync(`${path}/desktop.ini`)) {
-    fs.writeFileSync(`${path}/desktop.ini`, shellClassInfo.trim());
-  }
-  fs.readdirSync(path).forEach((file) => {
-    if (file.toLowerCase() === "desktop.ini") {
-      fs.renameSync(`${path}/${file}`, `${path}/desktop.ini`);
-      fs.chmodSync(`${path}/desktop.ini`, "0444");
-    }
-  });
-};
 
 /**
  * @title 파일 정리
@@ -102,26 +83,44 @@ const onFileCleaner = (path) => {
     if (err) {
       console.log(err + "폴더를 읽는 과정에서 문제가 생겼습니다.");
     } else {
-      const { IMAGE_REGEX, VIDEO_REGEX, FILE_REGEX, PDF_REGEX, XLS_REGEX, ZIP_REGEX, HWP_REGEX } = REGEX;
+      const {
+        IMAGE_REGEX,
+        VIDEO_REGEX,
+        FILE_REGEX,
+        PDF_REGEX,
+        XLS_REGEX,
+        ZIP_REGEX,
+        HWP_REGEX,
+      } = REGEX;
       files.map((item) => {
-        if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
+        if (
+          IMAGE_REGEX.test(item) ||
+          VIDEO_REGEX.test(item) ||
+          FILE_REGEX.test(item)
+        ) {
           if (IMAGE_REGEX.test(item)) {
-            onWriteFileHandler(imageDateFolder);
             onCopyFileHandler(path, imageDateFolder, item);
           }
 
           if (VIDEO_REGEX.test(item)) {
-            onWriteFileHandler(imageDateFolder);
             onCopyFileHandler(path, videoDateFolder, item);
           }
 
           if (FILE_REGEX.test(item)) {
-            onWriteFileHandler(imageDateFolder);
-            if (PDF_REGEX.test(item)) onCopyFileHandler(path, fileDatePdf, item);
-            if (XLS_REGEX.test(item)) onCopyFileHandler(path, fileDateXls, item);
-            if (ZIP_REGEX.test(item)) onCopyFileHandler(path, fileDateZip, item);
-            if (HWP_REGEX.test(item)) onCopyFileHandler(path, fileDateHwp, item);
-            if (!PDF_REGEX.test(item) && !XLS_REGEX.test(item) && !ZIP_REGEX.test(item) && !HWP_REGEX.test(item)) {
+            if (PDF_REGEX.test(item))
+              onCopyFileHandler(path, fileDatePdf, item);
+            if (XLS_REGEX.test(item))
+              onCopyFileHandler(path, fileDateXls, item);
+            if (ZIP_REGEX.test(item))
+              onCopyFileHandler(path, fileDateZip, item);
+            if (HWP_REGEX.test(item))
+              onCopyFileHandler(path, fileDateHwp, item);
+            if (
+              !PDF_REGEX.test(item) &&
+              !XLS_REGEX.test(item) &&
+              !ZIP_REGEX.test(item) &&
+              !HWP_REGEX.test(item)
+            ) {
               onCopyFileHandler(path, fileDateAll, item);
             }
           }
