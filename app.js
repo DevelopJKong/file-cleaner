@@ -1,13 +1,12 @@
-import fs from "fs";
-import moment from "moment";
+import fs from 'fs';
+import dayjs from 'dayjs';
 
-const mainPath = "/Users/jeongbin/Downloads";
+const mainPath = '/Users/jeongbin/Downloads';
 
 const REGEX = Object.freeze({
   IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif|\.svg)$/i,
   VIDEO_REGEX: /\.mp4$|\.avi$|\.mov$|\.wmv$|\.flv$/i,
-  FILE_REGEX:
-    /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso$/i,
+  FILE_REGEX: /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso$/i,
   PDF_REGEX: /\.pdf$/i,
   XLS_REGEX: /\.xls$|\.xlsx$/i,
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
@@ -26,12 +25,12 @@ const onCopyFileHandler = (path, datePath, item) => {
   fs.copyFile(`${path}/${item}`, `${datePath}/${item}`, (err) => {
     if (err) throw err;
 
-    console.log("파일이 복사되었습니다.");
+    console.log('파일이 복사되었습니다.');
 
     // 기존 파일 삭제
     fs.unlink(`${path}/${item}`, (err) => {
       if (err) throw err;
-      console.log("기존 파일이 삭제되었습니다.");
+      console.log('기존 파일이 삭제되었습니다.');
     });
   });
 };
@@ -54,10 +53,10 @@ const onMkdirHandler = (path) => {
  * @param {string} path
  */
 const onFileCleaner = (path) => {
-  const imagePath = path + "/_day_images";
-  const videoPath = path + "/_day_videos";
-  const filePath = path + "/_day_files";
-  const date = moment().format("YYYY-MM-DD");
+  const imagePath = path + '/_day_images';
+  const videoPath = path + '/_day_videos';
+  const filePath = path + '/_day_files';
+  const date = dayjs().format('YYYY-MM-DD');
   const imageDateFolder = `${imagePath}/${date}`;
   const videoDateFolder = `${videoPath}/${date}`;
   const fileDateFolder = `${filePath}/${date}`;
@@ -81,23 +80,11 @@ const onFileCleaner = (path) => {
 
   fs.readdir(path, (err, files) => {
     if (err) {
-      console.log(err + "폴더를 읽는 과정에서 문제가 생겼습니다.");
+      console.log(err + '폴더를 읽는 과정에서 문제가 생겼습니다.');
     } else {
-      const {
-        IMAGE_REGEX,
-        VIDEO_REGEX,
-        FILE_REGEX,
-        PDF_REGEX,
-        XLS_REGEX,
-        ZIP_REGEX,
-        HWP_REGEX,
-      } = REGEX;
+      const { IMAGE_REGEX, VIDEO_REGEX, FILE_REGEX, PDF_REGEX, XLS_REGEX, ZIP_REGEX, HWP_REGEX } = REGEX;
       files.map((item) => {
-        if (
-          IMAGE_REGEX.test(item) ||
-          VIDEO_REGEX.test(item) ||
-          FILE_REGEX.test(item)
-        ) {
+        if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
           if (IMAGE_REGEX.test(item)) {
             onCopyFileHandler(path, imageDateFolder, item);
           }
@@ -107,20 +94,11 @@ const onFileCleaner = (path) => {
           }
 
           if (FILE_REGEX.test(item)) {
-            if (PDF_REGEX.test(item))
-              onCopyFileHandler(path, fileDatePdf, item);
-            if (XLS_REGEX.test(item))
-              onCopyFileHandler(path, fileDateXls, item);
-            if (ZIP_REGEX.test(item))
-              onCopyFileHandler(path, fileDateZip, item);
-            if (HWP_REGEX.test(item))
-              onCopyFileHandler(path, fileDateHwp, item);
-            if (
-              !PDF_REGEX.test(item) &&
-              !XLS_REGEX.test(item) &&
-              !ZIP_REGEX.test(item) &&
-              !HWP_REGEX.test(item)
-            ) {
+            if (PDF_REGEX.test(item)) onCopyFileHandler(path, fileDatePdf, item);
+            if (XLS_REGEX.test(item)) onCopyFileHandler(path, fileDateXls, item);
+            if (ZIP_REGEX.test(item)) onCopyFileHandler(path, fileDateZip, item);
+            if (HWP_REGEX.test(item)) onCopyFileHandler(path, fileDateHwp, item);
+            if (!PDF_REGEX.test(item) && !XLS_REGEX.test(item) && !ZIP_REGEX.test(item) && !HWP_REGEX.test(item)) {
               onCopyFileHandler(path, fileDateAll, item);
             }
           }
@@ -131,4 +109,4 @@ const onFileCleaner = (path) => {
 };
 
 onFileCleaner(mainPath);
-console.log("script done");
+console.log('script done');
