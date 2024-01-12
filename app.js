@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 const mainPath = '/Users/jeongbin/Downloads';
 
 const REGEX = Object.freeze({
-  IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif|\.svg)$/i,
+  IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif|\.svg|\.avif|\.webp)$/i,
   VIDEO_REGEX: /\.mp4$|\.avi$|\.mov$|\.wmv$|\.flv$/i,
   FILE_REGEX: /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso$/i,
   PDF_REGEX: /\.pdf$/i,
@@ -14,7 +14,7 @@ const REGEX = Object.freeze({
 });
 
 /**
- * @title 파일 복사
+ * * 파일 복사
  * @description 파일 복사 후 기존 파일 삭제
  * @param {string} path - 파일이 있는 경로
  * @param {string} datePath - 날짜별 폴더 경로
@@ -36,7 +36,7 @@ const onCopyFileHandler = (path, datePath, item) => {
 };
 
 /**
- * @title 폴더 생성
+ * * 폴더 생성
  * @description 폴더가 없을 경우 폴더 생성
  * @param {string} path - 폴더 경로
  * @returns {void}
@@ -48,7 +48,7 @@ const onMkdirHandler = (path) => {
 };
 
 /**
- * @title 파일 정리
+ * * 파일 정리
  * @description 파일 정리을 정리해주는 main 함수입니다.
  * @param {string} path
  */

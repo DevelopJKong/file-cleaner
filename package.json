@@ -14,7 +14,6 @@
     "nodemon": "^2.0.21"
   },
   "dependencies": {
-    "dayjs": "^1.11.9",
-    "lodash": "^4.17.21"
+    "dayjs": "^1.11.9"
   }
 }
