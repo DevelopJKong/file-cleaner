@@ -11,6 +11,7 @@ const REGEX = Object.freeze({
   XLS_REGEX: /\.xls$|\.xlsx$/i,
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
   HWP_REGEX: /\.hwp$/i,
+  ANDROID_REGEX: /(\.apk|\.aab)$/i,
 });
 
 /**
@@ -64,6 +65,7 @@ const onFileCleaner = (path) => {
   const fileDateXls = `${fileDateFolder}/xls`;
   const fileDateZip = `${fileDateFolder}/zip`;
   const fileDateHwp = `${fileDateFolder}/hwp`;
+  const fileDateAndroid = `${fileDateFolder}/android`;
   const fileDateAll = `${fileDateFolder}/all`;
 
   onMkdirHandler(imagePath);
@@ -76,13 +78,14 @@ const onFileCleaner = (path) => {
   onMkdirHandler(fileDateXls);
   onMkdirHandler(fileDateZip);
   onMkdirHandler(fileDateHwp);
+  onMkdirHandler(fileDateAndroid);
   onMkdirHandler(fileDateAll);
 
   fs.readdir(path, (err, files) => {
     if (err) {
       console.log(err + '폴더를 읽는 과정에서 문제가 생겼습니다.');
     } else {
-      const { IMAGE_REGEX, VIDEO_REGEX, FILE_REGEX, PDF_REGEX, XLS_REGEX, ZIP_REGEX, HWP_REGEX } = REGEX;
+      const { IMAGE_REGEX, VIDEO_REGEX, FILE_REGEX, PDF_REGEX, XLS_REGEX, ZIP_REGEX, HWP_REGEX, ANDROID_REGEX } = REGEX;
       files.map((item) => {
         if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
           if (IMAGE_REGEX.test(item)) {
@@ -98,7 +101,14 @@ const onFileCleaner = (path) => {
             if (XLS_REGEX.test(item)) onCopyFileHandler(path, fileDateXls, item);
             if (ZIP_REGEX.test(item)) onCopyFileHandler(path, fileDateZip, item);
             if (HWP_REGEX.test(item)) onCopyFileHandler(path, fileDateHwp, item);
-            if (!PDF_REGEX.test(item) && !XLS_REGEX.test(item) && !ZIP_REGEX.test(item) && !HWP_REGEX.test(item)) {
+            if (ANDROID_REGEX.test(item)) onCopyFileHandler(path, fileDateAndroid, item);
+            if (
+              !PDF_REGEX.test(item) &&
+              !XLS_REGEX.test(item) &&
+              !ZIP_REGEX.test(item) &&
+              !HWP_REGEX.test(item) &&
+              !ANDROID_REGEX.test(item)
+            ) {
               onCopyFileHandler(path, fileDateAll, item);
             }
           }
