@@ -12,6 +12,9 @@ const REGEX = Object.freeze({
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
   HWP_REGEX: /\.hwp$/i,
   ANDROID_REGEX: /(\.apk|\.aab)$/i,
+  IOS_REGEX: /\.ips|\.ipa$/i,
+  PHOTO_SHOP_REGEX: /\.psd|\.ai|\.xd$/i,
+  JSON_REGEX: /\.json$/i,
 });
 
 /**
@@ -66,6 +69,9 @@ const onFileCleaner = (path) => {
   const fileDateZip = `${fileDateFolder}/zip`;
   const fileDateHwp = `${fileDateFolder}/hwp`;
   const fileDateAndroid = `${fileDateFolder}/android`;
+  const fileDateIos = `${fileDateFolder}/ios`;
+  const fileDatePhotoShop = `${fileDateFolder}/photo-shop`;
+  const fileDateJson = `${fileDateFolder}/json`;
   const fileDateAll = `${fileDateFolder}/all`;
 
   onMkdirHandler(imagePath);
@@ -79,6 +85,9 @@ const onFileCleaner = (path) => {
   onMkdirHandler(fileDateZip);
   onMkdirHandler(fileDateHwp);
   onMkdirHandler(fileDateAndroid);
+  onMkdirHandler(fileDateIos);
+  onMkdirHandler(fileDatePhotoShop);
+  onMkdirHandler(fileDateJson);
   onMkdirHandler(fileDateAll);
 
   fs.readdir(path, (err, files) => {
@@ -102,12 +111,18 @@ const onFileCleaner = (path) => {
             if (ZIP_REGEX.test(item)) onCopyFileHandler(path, fileDateZip, item);
             if (HWP_REGEX.test(item)) onCopyFileHandler(path, fileDateHwp, item);
             if (ANDROID_REGEX.test(item)) onCopyFileHandler(path, fileDateAndroid, item);
+            if (IOS_REGEX.test(item)) onCopyFileHandler(path, fileDateIos, item);
+            if (PHOTO_SHOP_REGEX.test(item)) onCopyFileHandler(path, fileDatePhotoShop, item);
+            if (JSON_REGEX.test(item)) onCopyFileHandler(path, fileDateJson, item);
             if (
               !PDF_REGEX.test(item) &&
               !XLS_REGEX.test(item) &&
               !ZIP_REGEX.test(item) &&
               !HWP_REGEX.test(item) &&
-              !ANDROID_REGEX.test(item)
+              !ANDROID_REGEX.test(item) &&
+              !IOS_REGEX.test(item) &&
+              !PHOTO_SHOP_REGEX.test(item) &&
+              !JSON_REGEX.test(item)
             ) {
               onCopyFileHandler(path, fileDateAll, item);
             }
