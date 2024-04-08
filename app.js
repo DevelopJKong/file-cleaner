@@ -6,12 +6,13 @@ const mainPath = '/Users/jeongbin/Downloads';
 const REGEX = Object.freeze({
   IMAGE_REGEX: /(\.jpg|\.jpeg|\.png|\.gif|\.svg|\.avif|\.webp)$/i,
   VIDEO_REGEX: /\.mp4$|\.avi$|\.mov$|\.wmv$|\.flv$/i,
-  FILE_REGEX: /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso$/i,
+  FILE_REGEX:
+    /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.hwp$|\.txt$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso|\.ips|\.ipa|\.psd|\.ai|\.xd|\.json/i,
   PDF_REGEX: /\.pdf$/i,
   XLS_REGEX: /\.xls$|\.xlsx$/i,
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
   HWP_REGEX: /\.hwp$/i,
-  ANDROID_REGEX: /(\.apk|\.aab)$/i,
+  ANDROID_REGEX: /\.apk|\.aab$/i,
   IOS_REGEX: /\.ips|\.ipa$/i,
   PHOTO_SHOP_REGEX: /\.psd|\.ai|\.xd$/i,
   JSON_REGEX: /\.json$/i,
@@ -94,7 +95,19 @@ const onFileCleaner = (path) => {
     if (err) {
       console.log(err + '폴더를 읽는 과정에서 문제가 생겼습니다.');
     } else {
-      const { IMAGE_REGEX, VIDEO_REGEX, FILE_REGEX, PDF_REGEX, XLS_REGEX, ZIP_REGEX, HWP_REGEX, ANDROID_REGEX } = REGEX;
+      const {
+        IMAGE_REGEX,
+        VIDEO_REGEX,
+        FILE_REGEX,
+        PDF_REGEX,
+        XLS_REGEX,
+        ZIP_REGEX,
+        HWP_REGEX,
+        ANDROID_REGEX,
+        IOS_REGEX,
+        PHOTO_SHOP_REGEX,
+        JSON_REGEX,
+      } = REGEX;
       files.map((item) => {
         if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
           if (IMAGE_REGEX.test(item)) {
