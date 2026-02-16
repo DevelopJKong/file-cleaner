@@ -109,6 +109,19 @@ const onFileCleaner = (path) => {
         JSON_REGEX,
       } = REGEX;
       files.map((item) => {
+        const itemPath = `${path}/${item}`;
+
+        // 폴더는 건너뛰기 (파일만 처리)
+        try {
+          const stats = fs.statSync(itemPath);
+          if (!stats.isFile()) {
+            return;
+          }
+        } catch (error) {
+          console.log(`파일 정보를 읽을 수 없습니다: ${item}`);
+          return;
+        }
+
         if (IMAGE_REGEX.test(item) || VIDEO_REGEX.test(item) || FILE_REGEX.test(item)) {
           if (IMAGE_REGEX.test(item)) {
             onCopyFileHandler(path, imageDateFolder, item);
