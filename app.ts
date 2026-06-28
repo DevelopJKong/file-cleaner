@@ -53,9 +53,9 @@ const classify = (item: string): Category | null => {
 
   if (IMAGE_REGEX.test(item)) return { base: '_day_images' };
   if (VIDEO_REGEX.test(item)) return { base: '_day_videos' };
-  if (AUDIO_REGEX.test(item)) return { base: '_day_audios' };
 
-  if (FILE_REGEX.test(item)) {
+  if (AUDIO_REGEX.test(item) || FILE_REGEX.test(item)) {
+    if (AUDIO_REGEX.test(item)) return { base: '_day_files', sub: 'audio' };
     if (PDF_REGEX.test(item)) return { base: '_day_files', sub: 'pdf' };
     if (XLS_REGEX.test(item)) return { base: '_day_files', sub: 'xls' };
     if (ZIP_REGEX.test(item)) return { base: '_day_files', sub: 'zip' };
