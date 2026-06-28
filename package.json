@@ -2,16 +2,21 @@
   "name": "file_cleaner",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "tsx watch app.ts",
+    "start": "tsx app.ts",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "@types/node": "^22.10.0",
+    "nodemon": "^2.0.21",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "dayjs": "^1.11.9"
