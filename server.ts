@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { cleanFiles, DEFAULT_PATH } from './app.js';
+import { cleanFiles, DEFAULT_PATH } from './app';
 
 const app = new Hono();
 
