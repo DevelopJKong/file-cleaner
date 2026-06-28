@@ -10,11 +10,11 @@ const REGEX = Object.freeze({
   VIDEO_REGEX: /\.mp4$|\.avi$|\.mov$|\.wmv$|\.flv$/i,
   AUDIO_REGEX: /\.mp3$/i,
   FILE_REGEX:
-    /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.csv$|\.hwp$|\.txt$|\.md$|\.html?$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso|\.ips|\.ipa|\.psd|\.ai|\.xd|\.kra|\.json/i,
+    /\.pdf$|\.doc$|\.docx$|\.ppt$|\.pptx$|\.xls$|\.xlsx$|\.csv$|\.hwpx?$|\.txt$|\.md$|\.html?$|\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.xd$|\.iso|\.ips|\.ipa|\.psd|\.ai|\.xd|\.kra|\.json/i,
   PDF_REGEX: /\.pdf$/i,
   XLS_REGEX: /\.xls$|\.xlsx$|\.csv$/i,
   ZIP_REGEX: /\.zip$|\.7z$|\.rar$|\.tar$|\.gz$|\.iso$/i,
-  HWP_REGEX: /\.hwp$/i,
+  HWP_REGEX: /\.hwpx?$/i,
   MARKDOWN_REGEX: /\.md$/i,
   HTML_REGEX: /\.html?$/i,
   ANDROID_REGEX: /\.apk|\.aab$/i,
