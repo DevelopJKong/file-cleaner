@@ -10,5 +10,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["app.ts"]
+  "include": ["app.ts", "server.ts"]
 }

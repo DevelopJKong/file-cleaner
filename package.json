@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "tsx watch app.ts",
     "start": "tsx app.ts",
+    "serve": "tsx server.ts",
+    "serve:dev": "tsx watch server.ts",
     "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +21,8 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "dayjs": "^1.11.9"
+    "@hono/node-server": "^1.13.7",
+    "dayjs": "^1.11.9",
+    "hono": "^4.6.14"
   }
 }
